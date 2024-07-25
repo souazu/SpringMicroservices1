@@ -10,6 +10,12 @@ Creating a spring boot application
 - Using spring CLI
 - Using start.spring.io
 
+How to make a REST call from your code?
+- Calling REST API's programmatically
+- Using REST client library
+- Spring Boot already comes with a client already in your classpath - RestTemplate
+
+
 
 
 
