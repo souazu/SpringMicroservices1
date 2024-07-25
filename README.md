@@ -15,8 +15,13 @@ How to make a REST call from your code?
 - Using REST client library
 - Spring Boot already comes with a client already in your classpath - RestTemplate
 
-  @Bean annotation - Producer - Remember it as anyone with this annotation is producing the instance of that class
-  @Autowired annotation - Consumer - Consumer of the class instance that is already available. 
+@Bean annotation - Producer - Remember it as anyone with this annotation is producing the instance of that class
+@Autowired annotation - Consumer - Consumer of the class instance that is already available. 
+
+Why should lists be avoided in the response of an API?
+Suppose, along with the list, if we wish to return another attribute at a later point in time, then we will need to wrap the list in an object along with the new attribute, This changes the signature of the API response.
+
+
 
 
 
