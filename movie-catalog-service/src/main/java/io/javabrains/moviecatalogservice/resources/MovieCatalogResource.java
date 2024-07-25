@@ -1,6 +1,5 @@
 package io.javabrains.moviecatalogservice.resources;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +13,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import io.javabrains.moviecatalogservice.models.CatalogItem;
 import io.javabrains.moviecatalogservice.models.Movie;
 import io.javabrains.moviecatalogservice.models.Rating;
+import io.javabrains.moviecatalogservice.models.UserRating;
 
 @RestController
 @RequestMapping("/catalog")
@@ -29,21 +29,22 @@ public class MovieCatalogResource {
 	public List<CatalogItem> getCatalog(@PathVariable("userId") String userId){
 		
 		//Get all the rated movie ids
-		List<Rating> ratings = Arrays.asList(new Rating("1234",4),new Rating("5678",7));
+		UserRating userRating = restTemplate.getForObject("http://localhost:8083/ratingsdata/users/"+userId, UserRating.class);
+		List<Rating> ratings = userRating.getUserRatings();
 		//For each movie id, call the movie info service and get details.
 		return ratings
 				.stream()
 				.map(rating->{
-					//Movie movie = restTemplate.getForObject("http://localhost:8082/movies/"+rating.getMovieId(), Movie.class); 
+					Movie movie = restTemplate.getForObject("http://localhost:8082/movies/"+rating.getMovieId(), Movie.class); 
 					
 					// Using WebClient Builder
-					Movie movie = webClientBuilder.build()
+					/*Movie movie = webClientBuilder.build()
 						.get()
 						.uri("http://localhost:8082/movies/"+rating.getMovieId())
 						.retrieve()
 						.bodyToMono(Movie.class)
 						.block();
-					
+					*/
 					return new CatalogItem(movie.getName(),"Malayalam movie",rating.getRating());
 				})
 				.collect(Collectors.toList());
