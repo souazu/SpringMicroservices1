@@ -20,6 +20,11 @@ How to make a REST call from your code?
 
 Why should lists be avoided in the response of an API?
 Suppose, along with the list, if we wish to return another attribute at a later point in time, then we will need to wrap the list in an object along with the new attribute, This changes the signature of the API response.
+When using RestTemplate, we need to specify the class name to return the response from the webservice. 
+- UserRating userRating = restTemplate.getForObject("http://localhost:8083/users/"+userId, UserRating.class);
+In case of ArrayList, the conversion to get the list of objects is more complicated than a plain object containing the list.
+Hence, as a practice, it is better to return an object in the response contract of the web service instead of a List.
+
 
 
 
