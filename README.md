@@ -15,6 +15,9 @@ How to make a REST call from your code?
 - Using REST client library
 - Spring Boot already comes with a client already in your classpath - RestTemplate
 
+  @Bean annotation - Producer - Remember it as anyone with this annotation is producing the instance of that class
+  @Autowired annotation - Consumer - Consumer of the class instance that is already available. 
+
 
 
 
