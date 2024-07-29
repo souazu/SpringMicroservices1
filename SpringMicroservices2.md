@@ -9,3 +9,7 @@ Fault Tolerance - When there is a fault in the application, what is the impact o
 
 Resilience - How many faults can a system tolerate before the system can completely go down? Is there a mechanism the system can come back to a normal state?
 
+What happens if a microservice goes down?
+If an instance of a microservice goes down, other instances of the same microservice can take up the request. 
+
+What happens if a microservice is slow?
