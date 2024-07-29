@@ -54,6 +54,14 @@ When the Eureka server is running and catalogue or movie info services are start
 @LoadBalanced annotation
 The @LoadBalanced annotation creates an instance of created RestTemplate load-balanced. There is no code you need to write to make the RestTemplate load-balance HTTP request it sends to an internal microservice. The RestTemplate bean will be intercepted and auto-configured by Spring Cloud.
 
+SUMMARY:
+1. Created three microservices
+2. Added code using RestTemplate so that the three microservices communicate with each other.
+3. Added discovery server
+4. Added client side dicovery libraries to the three microservices.
+5. Added LoadBalanced annotation and replaced the hardcoded urls with application names of the microservices in code so that hard coding can be removed.
+
+
 
 
 
