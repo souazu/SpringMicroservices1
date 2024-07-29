@@ -1,4 +1,4 @@
-Spring Microservices
+Spring Microservices - Introduction, Communication & Discovery
 
 What is the difference between microservices and web services?
 Take an example of a utility service such as an IP service - give an IP address as input and return the location of the IP address.
