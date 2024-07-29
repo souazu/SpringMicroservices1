@@ -47,6 +47,16 @@ Server-side discovery.
 
 Spring cloud has the client side discovery server.
 
+Eureka discovery server has the default port number of 8791.
+When catalog or movie info services include eureka client libraries, it tries to register to the eureka server with port number 8791. 
+When the Eureka server is running and catalogue or movie info services are started, they are automatically registered to the discovery server using the port and they get listed as clients in the eureka server portal - http://localhost:8761/
+
+@LoadBalanced annotation
+The @LoadBalanced annotation creates an instance of created RestTemplate load-balanced. There is no code you need to write to make the RestTemplate load-balance HTTP request it sends to an internal microservice. The RestTemplate bean will be intercepted and auto-configured by Spring Cloud.
+
+
+
+
 
 
 
