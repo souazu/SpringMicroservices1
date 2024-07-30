@@ -45,21 +45,24 @@ Server-side discovery.
 - Client makes a call to the discovery server requesting for catalog service
 - Discovery server forwards the client's request to the catalog service.
 
-Spring cloud has the client side discovery server.
+Spring Cloud has the client-side discovery server.
 
-Eureka discovery server has the default port number of 8791.
-When catalog or movie info services include eureka client libraries, it tries to register to the eureka server with port number 8791. 
-When the Eureka server is running and catalogue or movie info services are started, they are automatically registered to the discovery server using the port and they get listed as clients in the eureka server portal - http://localhost:8761/
+The Eureka discovery server has the default port number of 8791.
+When catalogue or movie info services include Eureka client libraries, it tries registering to the Eureka server with port number 8791. 
+When the Eureka server is running and catalogue or movie info services are started, they are automatically registered to the discovery server using the port and they get listed as clients in the Eureka server portal - http://localhost:8761/
 
 @LoadBalanced annotation
-The @LoadBalanced annotation creates an instance of created RestTemplate load-balanced. There is no code you need to write to make the RestTemplate load-balance HTTP request it sends to an internal microservice. The RestTemplate bean will be intercepted and auto-configured by Spring Cloud.
+The @LoadBalanced annotation creates an instance of the created RestTemplate load-balanced. You need to write no code to make the RestTemplate load-balance HTTP request it sends to an internal microservice. Spring Cloud will intercept and auto-configure the RestTemplate bean.
+
+Running a microservice on another port:
+java -Dserver.port=8201 -jar movie-info-service-0.0.1-SNAPSHOT.jar
 
 SUMMARY:
 1. Created three microservices
 2. Added code using RestTemplate so that the three microservices communicate with each other.
 3. Added discovery server
-4. Added client side dicovery libraries to the three microservices.
-5. Added LoadBalanced annotation and replaced the hardcoded urls with application names of the microservices in code so that hard coding can be removed.
+4. Added client-side discovery libraries to the three microservices.
+5. Added LoadBalanced annotation and replaced the hardcoded URLs with application names of the microservices in code so that hard coding can be removed.
 
 
 
