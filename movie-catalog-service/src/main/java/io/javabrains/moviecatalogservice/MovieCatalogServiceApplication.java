@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -13,8 +14,9 @@ public class MovieCatalogServiceApplication {
 	@Bean
 	@LoadBalanced
 	public RestTemplate getRestTemplate() {
-		System.out.println("I am GETTING CREATED HERE! WOHOOO!");
-		return new RestTemplate();
+		HttpComponentsClientHttpRequestFactory httpComponentsClientHttpRequestFactory = new HttpComponentsClientHttpRequestFactory();
+		httpComponentsClientHttpRequestFactory.setConnectTimeout(3000);
+		return new RestTemplate(httpComponentsClientHttpRequestFactory);
 	}
 	
 	@Bean
@@ -23,12 +25,11 @@ public class MovieCatalogServiceApplication {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println("OK, I am getting called."+MovieCatalogServiceApplication.class.getName());
+		
 		
 		SpringApplication.run(MovieCatalogServiceApplication.class, args);
 		
-		System.out.println("OK, I am getting called- END."+MovieCatalogServiceApplication.class.getName());
-
+		
 	}
 
 }
