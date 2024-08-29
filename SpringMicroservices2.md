@@ -23,7 +23,7 @@ Imagine microservice A calls B and then calls microservice C in that sequence. N
 Solution for microservice going slow:
 1) Adding timeouts - Setting timeout for RestTemplate
    Applying timeout partially solves the problem. For example, we set the timeout at 3 seconds. And requests come at each second. The number of threads getting cleared is still lower than the threads that need to be created because of new requests.
-===================================================================================================================
+======================================================================================
 Circuit Breaker Pattern
 1) Detect something is wrong - such as some microservice is taking too long to respond
 2) Take temporary steps to handle the situation
