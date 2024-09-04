@@ -29,27 +29,17 @@ public class MovieCatalogResource {
 	private WebClient.Builder webClientBuilder;
 	
 	@RequestMapping("/{userId}")
-	@HystrixCommand(fallbackMethod = "getFallbackCatalog")
+
 	public List<CatalogItem> getCatalog(@PathVariable("userId") String userId){
 		
 		//Get all the rated movie ids
-		UserRating userRating = restTemplate.getForObject("http://ratings-data-service/ratingsdata/users/"+userId, UserRating.class);
+		UserRating userRating = getRatingService(userId);
 		List<Rating> ratings = userRating.getUserRatings();
 		//For each movie id, call the movie info service and get details.
 		return ratings
 				.stream()
 				.map(rating->{
-					Movie movie = restTemplate.getForObject("http://movie-info-service/movies/"+rating.getMovieId(), Movie.class); 
-					
-					// Using WebClient Builder
-					/*Movie movie = webClientBuilder.build()
-						.get()
-						.uri("http://localhost:8082/movies/"+rating.getMovieId())
-						.retrieve()
-						.bodyToMono(Movie.class)
-						.block();
-					*/
-					return new CatalogItem(movie.getName(),"Malayalam movie",rating.getRating());
+					return getMovieInfo(rating);
 				})
 				.collect(Collectors.toList());
 		
@@ -59,9 +49,25 @@ public class MovieCatalogResource {
 		//return Arrays.asList(new CatalogItem("Titanic","Titanic Movie",10),
 		//		new CatalogItem("Transformers","Transformers Movie",7),new CatalogItem("Virus","Virus Movie",9));
 	}
+	@HystrixCommand(fallbackMethod = "getFallbackCatalogItem")
+	private CatalogItem getMovieInfo(Rating rating) {
+		Movie movie = restTemplate.getForObject("http://movie-info-service/movies/"+rating.getMovieId(), Movie.class); 
+		return new CatalogItem(movie.getName(),"Malayalam movie",rating.getRating());
+	}
+	@HystrixCommand(fallbackMethod = "getFallbackUserRating")
+	private UserRating getRatingService(String userId) {
+		return restTemplate.getForObject("http://ratings-data-service/ratingsdata/users/"+userId, UserRating.class);
+	}
 	
-	public List<CatalogItem> getFallbackCatalog(@PathVariable("userId") String userId){
-		return Arrays.asList(new CatalogItem("No movies","",2));
+	public UserRating getFallbackUserRating(@PathVariable("userId") String userId) {
+		UserRating userRating = new UserRating();
+		userRating.setUserId(userId);
+		userRating.setUserRatings(Arrays.asList(new Rating("no ratings found",0)));
+				
+		return userRating;
+	}
+	public List<CatalogItem> getFallbackCatalogItem(@PathVariable("userId") String userId){
+		return Arrays.asList(new CatalogItem("No movies  found","",2));
 	}
 	
 }
