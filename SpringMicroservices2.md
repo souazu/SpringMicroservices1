@@ -65,6 +65,7 @@ Why circuit breakers?
 - Automatic recovery - Sleep timeout
 
 Circuit Breaker Pattern
+
 When to break circuit | What to do when circuit breaks | When to resume requests
 ================================================================================================================
 
@@ -79,6 +80,12 @@ Adding Hystrix to a Spring Boot microservice
 - Add the annotation - @EnableCircuitBreaker to the application class.
 - Add @HystrixCommand to methods that need circuit breakers
 - Configure Hystrix behaviour
+
+How does Hystrix work?
+Imagine an API class and a method in that class. Imagine this method is annotated with @HystrixCommand. 
+When this happens, the API class is covered with a proxy class. 
+This proxy class will contain the circuit breaker logic.
+So, when a request is taking time, the fallback method is invoked by this wrapper class.
 
 
 
